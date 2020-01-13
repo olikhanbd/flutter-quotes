@@ -13,6 +13,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<Quote> quotes = getQuotes();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +25,16 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.redAccent,
       ),
       body: Column(
-        children: getQuotes().map((quote) => QuoteCard(quote: quote)).toList(),
+        children: quotes
+            .map((quote) => QuoteCard(
+                  quote: quote,
+                  delete: () {
+                    setState(() {
+                      quotes.remove(quote);
+                    });
+                  },
+                ))
+            .toList(),
       ),
     );
   }
